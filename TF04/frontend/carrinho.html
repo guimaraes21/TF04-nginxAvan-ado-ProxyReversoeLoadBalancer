@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - TechStore</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>🛒 TechStore</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/produtos.html">Produtos</a>
+            <a href="/carrinho.html">Carrinho</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h2 style="margin-bottom:1rem;">Seu Carrinho</h2>
+        <div class="cart-empty">
+            <p style="font-size:3rem;">🛒</p>
+            <p>Seu carrinho está vazio.</p>
+            <a href="/produtos.html" class="btn" style="margin-top:1rem;">Ver Produtos</a>
+        </div>
+        <div class="server-info" id="server-info">Carregando...</div>
+    </div>
+    <footer>TF04 - E-commerce com Load Balancer &copy; 2026 UniFAAT</footer>
+    <script>
+        fetch('/api/cart')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('server-info').textContent =
+                    `Servido pela instância: ${data.served_by}`;
+            });
+    </script>
+</body>
+</html>

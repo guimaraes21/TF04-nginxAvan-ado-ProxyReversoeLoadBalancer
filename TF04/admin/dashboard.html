@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - TechStore</title>
+    <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+    <header>
+        <h1>⚙️ Admin Dashboard</h1>
+        <button class="refresh-btn" onclick="loadData()">Atualizar</button>
+    </header>
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Instâncias Ativas</h3>
+                <div class="value" id="active-count">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Requisições</h3>
+                <div class="value" id="total-requests">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Status LB</h3>
+                <div class="value" style="font-size:1.2rem;" id="lb-status">-</div>
+            </div>
+        </div>
+        <div class="instances">
+            <h2>Instâncias Backend</h2>
+            <div id="instance-list">Carregando...</div>
+        </div>
+    </div>
+    <footer>TF04 Admin Panel &copy; 2026 UniFAAT</footer>
+    <script>
+        const backends = [
+            { name: 'Backend 1', url: '/api/status' },
+            { name: 'Backend 2', url: '/api/status' },
+            { name: 'Backend 3', url: '/api/status' }
+        ];
+
+        async function loadData() {
+            let active = 0, totalReqs = 0;
+            const list = document.getElementById('instance-list');
+            let html = '';
+
+            for (let i = 0; i < 3; i++) {
+                try {
+                    const res = await fetch('/api/status');
+                    const data = await res.json();
+                    active++;
+                    totalReqs += data.requests_served || 0;
+                    html += `<div class="instance">
+                        <span>${data.instance_name} (${data.instance_id})</span>
+                        <span>Uptime: ${data.uptime}s | Reqs: ${data.requests_served}</span>
+                        <span class="badge healthy">Healthy</span>
+                    </div>`;
+                } catch {
+                    html += `<div class="instance">
+                        <span>Backend ${i + 1}</span>
+                        <span>-</span>
+                        <span class="badge down">Down</span>
+                    </div>`;
+                }
+            }
+
+            list.innerHTML = html;
+            document.getElementById('active-count').textContent = active;
+            document.getElementById('total-requests').textContent = totalReqs;
+            document.getElementById('lb-status').textContent = active > 0 ? 'Operacional' : 'Offline';
+        }
+
+        loadData();
+        setInterval(loadData, 10000);
+    </script>
+</body>
+</html>

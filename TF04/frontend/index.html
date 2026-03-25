@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - E-commerce</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>🛒 TechStore</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/produtos.html">Produtos</a>
+            <a href="/carrinho.html">Carrinho</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="hero">
+            <h2>Bem-vindo à TechStore</h2>
+            <p>Os melhores produtos de tecnologia com alta disponibilidade</p>
+        </div>
+        <h2 style="margin-bottom:1rem;">Produtos em Destaque</h2>
+        <div class="products-grid" id="products"></div>
+        <div class="server-info" id="server-info">Carregando info do servidor...</div>
+    </div>
+    <footer>TF04 - E-commerce com Load Balancer &copy; 2026 UniFAAT</footer>
+    <script>
+        fetch('/api/products')
+            .then(r => r.json())
+            .then(data => {
+                const grid = document.getElementById('products');
+                grid.innerHTML = data.products.map(p => `
+                    <div class="product-card">
+                        <h3>${p.name}</h3>
+                        <p class="price">R$ ${p.price.toFixed(2)}</p>
+                        <p class="stock">Estoque: ${p.stock} unidades</p>
+                        <button class="btn">Adicionar ao Carrinho</button>
+                    </div>
+                `).join('');
+                document.getElementById('server-info').textContent =
+                    `Servido pela instância: ${data.served_by}`;
+            })
+            .catch(() => {
+                document.getElementById('products').innerHTML = '<p>Erro ao carregar produtos.</p>';
+            });
+    </script>
+</body>
+</html>

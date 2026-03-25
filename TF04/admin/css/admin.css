@@ -1,0 +1,19 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; }
+header { background: #16213e; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e94560; }
+header h1 { font-size: 1.3rem; color: #e94560; }
+.container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.stat-card { background: #16213e; border-radius: 10px; padding: 1.5rem; text-align: center; border: 1px solid #0f3460; }
+.stat-card h3 { color: #888; font-size: .85rem; text-transform: uppercase; margin-bottom: .5rem; }
+.stat-card .value { font-size: 2rem; color: #e94560; font-weight: 700; }
+.instances { background: #16213e; border-radius: 10px; padding: 1.5rem; border: 1px solid #0f3460; }
+.instances h2 { margin-bottom: 1rem; color: #e94560; }
+.instance { display: flex; justify-content: space-between; align-items: center; padding: .75rem; border-bottom: 1px solid #0f3460; }
+.instance:last-child { border-bottom: none; }
+.badge { padding: .25rem .75rem; border-radius: 20px; font-size: .8rem; font-weight: 600; }
+.badge.healthy { background: #1b5e20; color: #a5d6a7; }
+.badge.down { background: #b71c1c; color: #ef9a9a; }
+.refresh-btn { background: #e94560; color: #fff; border: none; padding: .5rem 1rem; border-radius: 6px; cursor: pointer; font-size: .85rem; }
+.refresh-btn:hover { background: #c73650; }
+footer { text-align: center; padding: 2rem; color: #555; font-size: .8rem; }
